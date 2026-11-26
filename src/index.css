@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Base */
+  --bg-page: #0a0a0f;
+  --bg-glow-indigo: rgba(79, 70, 229, 0.42);
+  --bg-glow-violet: rgba(124, 58, 237, 0.34);
+  --bg-glow-teal: rgba(16, 185, 129, 0.30);
+  --bg-panel: #111118f2;
+  --bg-surface: #16161fcc;
+  --bg-surface-raised: #1c1c28;
+  --bg-header: #0f0f16e6;
+  --border-subtle: #ffffff14;
+  --border-hover: #ffffff26;
+  --border-active: #818cf84d;
+
+  /* Category accents (muted) */
+  --accent-indigo: #818cf8;
+  --accent-emerald: #34d399;
+  --accent-violet: #c084fc;
+  --accent-amber: #fbbf24;
+  --accent-rose: #fb7185;
+  --accent-cyan: #22d3ee;
+
+  /* Text */
+  --text-primary: #f1f1f4;
+  --text-secondary: #9ca3af;
+  --text-dim: #6b7280;
+  --text-on-accent: #0a0a0f;
+}
+
+html { color-scheme: dark; }
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  @apply font-sans antialiased;
+}
+
+h1, h2, h3 { letter-spacing: -0.01em; }
+
+code, pre {
+  font-family: theme("fontFamily.mono");
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+
+/* Static background glow orbs (the only ambient element) */
+.glow-orb {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(120px);
+}
+
+/* Per-category accent variable for checkboxes */
+.cat-indigo { --c: #818cf8; }
+.cat-emerald { --c: #34d399; }
+.cat-violet { --c: #c084fc; }
+.cat-rose { --c: #fb7185; }
+
+/* Checkbox: rounded square, subtle border, solid accent fill when checked */
+.ui-check {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+.ui-check:hover { border-color: rgba(255, 255, 255, 0.4); }
+.ui-check:checked { background: var(--c, #818cf8); border-color: var(--c, #818cf8); }
+.ui-check:checked::after {
+  content: "";
+  position: absolute;
+  left: 4.5px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Consistent focus ring: cyan at low opacity */
+:focus-visible { outline: 2px solid rgba(34, 211, 238, 0.5); outline-offset: 2px; }
+input[type="text"]:focus-visible, input:not([type]):focus-visible, textarea:focus-visible { outline: none; }
+
+::selection { background: rgba(129, 140, 248, 0.35); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
